@@ -1,0 +1,60 @@
+name: Test workflow with environments
+
+on:
+  push:
+    branches: ['main']
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      
+      - name: Setup JDK 11 for Sonar Cloud
+        uses: actions/setup-java@v1
+        with:
+            java-version: 11
+      
+      - name: Maven Build
+        run: mvn clean install -DskipTests=true
+      
+      - name: Run JUnit Tests
+        run: mvn test -Dmaven.test.failure.ignore=true surefire-report:report
+          
+  test:
+    needs: build
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo Run integration tests.
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      
+      - name: Setup JDK 11 for Sonar Cloud
+        uses: actions/setup-java@v1
+        with:
+            java-version: 11
+      
+      - name: Maven Build
+        run: mvn clean install -DskipTests=true
+      
+  deploy:
+    environment: PROD
+    needs: test
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo Run deployment.
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      
+      - name: Setup JDK 11 for Sonar Cloud
+        uses: actions/setup-java@v1
+        with:
+            java-version: 11
+      
+      - name: Maven Build
+        run: mvn clean install -DskipTests=true
