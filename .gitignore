@@ -8,3 +8,9 @@ tmp/nanoc/
 
 # Crash Log
 crash.log
+/target/
+
+.classpath
+.project
+.settings/
+

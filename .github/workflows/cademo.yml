@@ -1,0 +1,36 @@
+name: cademo
+
+on:
+  pull_request:
+    branches: ['master']
+  workflow_dispatch:
+
+jobs:
+  build:
+    # The type of runner that the job will run on
+    runs-on: self-hosted
+    steps:
+      - name: Say Hello World
+        run: echo Hello, world!
+        
+      - name: Checkout tools repo
+        uses: actions/checkout@v3
+        with:
+          repository: velivalab/SampleRepo
+        
+  test:
+    # The type of runner that the job will run on
+    runs-on: self-hosted
+    needs: build
+    steps:
+      - name: Say Test World
+        run: echo Test, world!
+        
+        
+  deploy:
+    # The type of runner that the job will run on
+    runs-on: self-hosted
+    needs: test
+    steps:
+      - name: Say Deploy World
+        run: echo Deploy, world!

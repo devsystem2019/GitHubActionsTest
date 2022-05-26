@@ -1,0 +1,34 @@
+name: cademo1
+
+on:
+  pull_request:
+    branches: ['master']
+  workflow_dispatch:
+
+jobs:
+  build:
+    # The type of runner that the job will run on
+    runs-on: self-hosted
+    steps:
+      - name: Sleep for 1 min
+        run: sleep 60s
+        
+      - name: Say Hello World
+        run: echo Hello, world!
+        
+
+  test:
+    # The type of runner that the job will run on
+    runs-on: self-hosted
+    needs: build
+    steps:
+      - name: Say Test World
+        run: echo Test, world!
+        
+  deploy:
+    # The type of runner that the job will run on
+    runs-on: self-hosted
+    needs: test
+    steps:
+      - name: Say Deploy World
+        run: echo Deploy, world!
