@@ -1,4 +1,4 @@
-name: TestSummaryActionWithEnvironment
+name: TestSummaryCustomAction
 
 on:
   push:
