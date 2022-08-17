@@ -1,4 +1,4 @@
-name: TestSummariesCustomActions
+name: TestSummaryActionWithEnvironment
 
 on:
   push:
@@ -6,8 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:        
-  test:
-    needs: build
+  integrationTest:
     name: Integration Tests
     runs-on: ubuntu-latest
     steps:
@@ -20,5 +19,5 @@ jobs:
         with:
             java-version: 11
       
-      - name: Maven Build
-        run: mvn clean install -DskipTests=true
+      - name: Run Maven Tests
+        run: mvn --batch-mode --update-snapshots verify
