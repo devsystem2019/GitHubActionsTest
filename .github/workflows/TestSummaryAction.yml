@@ -1,4 +1,4 @@
-name: Test workflow with environments
+name: TestSummariesCustomActions
 
 on:
   push:
