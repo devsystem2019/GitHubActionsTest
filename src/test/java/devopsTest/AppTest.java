@@ -1,4 +1,4 @@
-package com.snc.devops.test;
+package devopsTest;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
