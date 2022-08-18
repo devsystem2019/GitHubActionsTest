@@ -33,5 +33,5 @@ jobs:
           instance-url: ${{ secrets.SN_INSTANCE_URL }}
           tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
-          job-name: 'Build'
+          job-name: 'Integration Tests'
           xml-report-filename: target/surefire-reports/testng-results.xml
