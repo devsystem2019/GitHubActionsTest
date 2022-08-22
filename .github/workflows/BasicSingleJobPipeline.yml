@@ -1,0 +1,21 @@
+name: BasicSingleJobPipeline
+
+on:
+  workflow_dispatch:
+  
+jobs:        
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo Run integration tests.
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      
+      - name: Setup JDK 11 for Sonar Cloud
+        uses: actions/setup-java@v1
+        with:
+            java-version: 11
+      
+      - name: Maven Build
+        run: mvn clean install -DskipTests=true
