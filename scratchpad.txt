@@ -1,2 +1,3 @@
 This is dummy scratchpad file to have new commits.
 c1
+c2
