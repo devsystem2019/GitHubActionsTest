@@ -1,3 +1,4 @@
 This is dummy scratchpad file to have new commits.
 
 # commit1
+# commit2
