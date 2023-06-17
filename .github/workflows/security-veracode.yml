@@ -40,4 +40,4 @@ jobs:
           tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
           job-name: 'Veracode Static Analysis'
-          security-result-attributes: '{ "scanner": $SCANNER, "applicationName": "App-DevOps-Azure-POC" }'
+          security-result-attributes: '{ "scanner": "Veracode", "applicationName": "App-DevOps-Azure-POC" }'
