@@ -24,7 +24,7 @@ jobs:
         with:
           appname: $VERACODE_APPLICATION_NAME
           createprofile: false
-          filepath: 'target/DevOps-Test-1.39.0-SNAPSHOT.jar'
+          filepath: 'target/GithubActionsTest-1.39.0-SNAPSHOT.jar'
           #version: ${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
           vid: '${{ secrets.VERACODE_API_ID }}'
           vkey: '${{ secrets.VERACODE_API_KEY }}'
