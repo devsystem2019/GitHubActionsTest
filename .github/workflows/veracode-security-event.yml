@@ -1,4 +1,4 @@
-name: Veracode security summary results
+name: Veracode security result
 
 on: workflow_dispatch
 
