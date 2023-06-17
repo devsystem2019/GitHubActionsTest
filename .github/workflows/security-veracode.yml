@@ -19,17 +19,17 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
-      - name: Veracode Upload And Scan
-        uses: veracode/veracode-uploadandscan-action@0.2.6
-        with:
-          appname: $VERACODE_APPLICATION_NAME
-          createprofile: false
-          filepath: 'target/GithubActionsTest-1.39.0-SNAPSHOT.jar'
-          #version: ${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
-          vid: '${{ secrets.VERACODE_API_ID }}'
-          vkey: '${{ secrets.VERACODE_API_KEY }}'
-          #deleteincompletescan: 1
-          scantimeout: 20
+#       - name: Veracode Upload And Scan
+#         uses: veracode/veracode-uploadandscan-action@0.2.6
+#         with:
+#           appname: $VERACODE_APPLICATION_NAME
+#           createprofile: false
+#           filepath: 'target/GithubActionsTest-1.39.0-SNAPSHOT.jar'
+#           #version: ${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
+#           vid: '${{ secrets.VERACODE_API_ID }}'
+#           vkey: '${{ secrets.VERACODE_API_KEY }}'
+#           #deleteincompletescan: 1
+#           scantimeout: 20
 
       - name: ServiceNow DevOps Security Results
         uses: maheshganji/custom-action-get@sonar
