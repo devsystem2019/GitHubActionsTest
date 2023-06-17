@@ -1,0 +1,43 @@
+name: Get Veracode security summary results
+
+on: workflow_dispatch
+
+env:
+  SCANNER: "Veracode"
+  VERACODE_APPLICATION_NAME: "App-DevOps-Azure-POC"
+  
+jobs:
+  # This workflow contains a job to build and submit pipeline scan, you will need to customize the build process accordingly and make sure the artifact you build is used as the file input to the pipeline scan file parameter
+  scan:
+    name: Veracode Static Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it and copies all sources into ZIP file for submitting for analysis.
+        uses: actions/checkout@v3
+
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+
+      - name: Veracode Upload And Scan
+        uses: veracode/veracode-uploadandscan-action@0.2.6
+        with:
+          appname: $VERACODE_APPLICATION_NAME
+          createprofile: false
+          filepath: 'target/DevOps-Test-1.39.0-SNAPSHOT.jar'
+          #version: ${{ github.run_id }}-${{ github.run_number }}-${{ github.run_attempt }}
+          vid: '${{ secrets.VERACODE_API_ID }}'
+          vkey: '${{ secrets.VERACODE_API_KEY }}'
+          #deleteincompletescan: 1
+          scantimeout: 20
+
+      - name: ServiceNow DevOps Security Results
+        uses: maheshganji/custom-action-get@sonar
+        with:
+          devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
+          devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+          context-github: ${{ toJSON(github) }}
+          job-name: 'Veracode Static Analysis'
+          security-result-attributes: '{ "scanner": $SCANNER, "applicationName": $VERACODE_APPLICATION_NAME }'
