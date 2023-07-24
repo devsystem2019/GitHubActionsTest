@@ -1,15 +1,38 @@
-name: Veracode security result
+name: Veracode security result with SNOW custom change
 
 on: workflow_dispatch
 
 env:
   SCANNER: "Veracode"
-  VERACODE_APPLICATION_NAME: "App-DevOps-Azure-POC"
+  VERACODE_APPLICATION_NAME: "VeraDemo10"
   
 jobs:
   # This workflow contains a job to build and submit pipeline scan, you will need to customize the build process accordingly and make sure the artifact you build is used as the file input to the pipeline scan file parameter
+  build:
+    # Running your workflow when a pull request merges
+    # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#running-your-workflow-when-a-pull-request-merges-1
+    #if: github.event.pull_request.merged == true
+    name: Build
+    runs-on: ubuntu-latest
+    steps:           
+        - uses: actions/checkout@v2
+          with:
+              fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+        - name: Set up JDK 11
+          uses: actions/setup-java@v1
+          with:
+              java-version: 11
+
+        - name: Cache Maven packages
+          uses: actions/cache@v1
+          with:
+              path: ~/.m2
+              key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+              restore-keys: ${{ runner.os }}-m2
   scan:
     name: Veracode Static Analysis
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -36,8 +59,40 @@ jobs:
         with:
           devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
           devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+          devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
           instance-url: ${{ secrets.SN_INSTANCE_URL }}
           tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
           job-name: 'Veracode Static Analysis'
-          security-result-attributes: '{ "scanner": "Veracode", "applicationName": "App-DevOps-Azure-POC", "securityToolId": "5b728853c3df29109aae4f7dc001317e" }'
+          security-result-attributes: '{ "scanner": "Veracode", "applicationName": "VeraDemo10"}'
+  deploy:
+      #if: github.event.pull_request.merged == true
+      name: Deploy
+      needs: scan
+      runs-on: ubuntu-latest
+      steps:     
+          - name: ServiceNow DevOps Change Automation
+          # You may pin to the exact commit or the version.
+          # uses: ServiceNow/servicenow-devops-change@0f57435999463cc1dea44bde4f5eca9879474b85
+          # uses: ServiceNow/servicenow-devops-change@main            
+            uses: ServiceNow/servicenow-devops-change@dev2
+            with:
+                # ServiceNow Instance URL
+                instance-url: ${{ secrets.SN_INSTANCE_URL }}
+                # Devops Integration User Name
+                devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
+                # Devops Integration User Password
+                devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+                # Orchestration Tool Id
+                tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+                # Display Name of the Job
+                job-name: 'Deploy'
+                # Github Context
+                context-github: ${{ toJSON(github) }}
+                # The max. time in seconds to wait until the action should fail.
+                timeout: 3600 # optional, default is 3600
+                # The time in seconds to wait between trying the API.
+                interval: 100 # optional, default is 100
+                # The customized inputs to create change with the requested details.
+                changeCreationTimeOut: 3600
+                change-request: '{ "setCloseCode": "true", "attributes": { "short_description": "Automated Software Deployment", "description": "Automated Software Deployment.", "assignment_group": "a715cd759f2002002920bde8132e7018", "implementation_plan": "Software update is tested and results can be found in Test Summaries Tab.", "backout_plan": "When software fails in production, the previous software release will be re-deployed.", "test_plan": "Testing if the software was successfully deployed", "type": "normal" } }'
