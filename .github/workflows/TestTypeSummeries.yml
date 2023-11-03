@@ -50,7 +50,7 @@ jobs:
                   # Github Context
                   context-github: ${{ toJSON(github) }}
                   # XUnit xml report file name with path
-                  xml-report-filename: NunitFolder/NUnit.xml
+                  xml-report-filename: NUnitFolder/NUnit.xml
                   
   deploy:
     name: Deploy
