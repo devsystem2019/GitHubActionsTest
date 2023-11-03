@@ -1,0 +1,74 @@
+name: GitHub Test Custom Action
+
+on: workflow_dispatch
+
+jobs:
+  publish-test-results:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    # - name: Publish Test Results
+    #   uses: actions/upload-artifact@v2
+    #   with:
+    #     name: test-results  # Name for the artifact
+    #     path: '**/xunit.xml'  # Use a wildcard pattern to match all xunit.xml files
+
+  test:
+        name: Test
+        needs: publish-test-results
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
+              
+            - name: ServiceNow DevOps Unit Test Results
+              uses: ServiceNow/servicenow-devops-test-report@EPIC1076738
+              with:
+                  devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
+                  devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+                  instance-url: ${{ secrets.SN_INSTANCE_NAME }}
+                  tool-id: ${{ secrets.SN_ORCH_TOOL_ID }}
+                  # Job Name
+                  job-name: 'Test' # Should be same name as declared in 'name' clause of the current Stage
+                  # Github Context
+                  context-github: ${{ toJSON(github) }}
+                  # XUnit xml report file name with path
+                  xml-report-filename: JestFolder/jest-junit.xml #valid-nunit.xml #invalid_test_type.xml #valid-nunit.xml #invalid_test_type.xml #testResultsFolder/ #valid-xunit.xml  #testng.xml #valid-nunit.xml #testng.xml  #valid-nunit.xml #valid-MSTest.trx #testng.xml #valid-xunit.xml 
+            
+            - name: ServiceNow DevOps NUnit Test Results
+              uses: ServiceNow/servicenow-devops-test-report@EPIC1076738
+              with:
+                  devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
+                  devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+                  instance-url: ${{ secrets.SN_INSTANCE_NAME }}
+                  tool-id: ${{ secrets.SN_ORCH_TOOL_ID }}
+                  # Job Name
+                  job-name: 'Test' # Should be same name as declared in 'name' clause of the current Stage
+                  # Github Context
+                  context-github: ${{ toJSON(github) }}
+                  # XUnit xml report file name with path
+                  xml-report-filename: NunitFolder/NUnit.xml
+                  
+  deploy:
+    name: Deploy
+    needs: test
+    runs-on: ubuntu-latest
+    steps:     
+      - name: ServiceNow Change
+        uses: ServiceNow/servicenow-devops-change@main
+        with:
+          devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
+          devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+          instance-url: ${{ secrets.SN_INSTANCE_NAME }}
+          tool-id: ${{ secrets.SN_ORCH_TOOL_ID }}
+          context-github: ${{ toJSON(github) }}
+          job-name: 'Deploy'
+          change-request: '{"setCloseCode":"true","attributes":{"short_description":"Automated Software Deployment","description":"Automated Software Deployment.","assignment_group":"a715cd759f2002002920bde8132e7018","implementation_plan":"Software update is tested and results can be found in Test Summaries Tab; When the change is approved the implementation happens automated by the CICD pipeline within the change planned start and end time window.","backout_plan":"When software fails in production, the previous software release will be re-deployed.","test_plan":"Testing if the software was successfully deployed"}}'
+          interval: '100'
+          timeout: '3600'
+          changeCreationTimeOut: '3600'
+          abortOnChangeCreationFailure: true
+          abortOnChangeStepTimeout: true
