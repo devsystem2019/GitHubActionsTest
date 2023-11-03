@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Site BuildName="(empty)"
+	BuildStamp="20230901-0719-Experimental"
+	Name="(empty)"
+	Generator="ctest-3.27.3"
+	CompilerName=""
+	CompilerVersion=""
+	OSName="Linux"
+	Hostname="fv-az637-210"
+	OSRelease="5.15.0-1041-azure"
+	OSVersion="#48-Ubuntu SMP Tue Jun 20 20:34:08 UTC 2023"
+	OSPlatform="x86_64"
+	Is64Bits="1"
+	VendorString="GenuineIntel"
+	VendorID="Intel Corporation"
+	FamilyID="6"
+	ModelID="85"
+	ProcessorCacheSize="36608"
+	NumberOfLogicalCPU="2"
+	NumberOfPhysicalCPU="2"
+	TotalVirtualMemory="4095"
+	TotalPhysicalMemory="6931"
+	LogicalProcessorsPerPhysical="1"
+	ProcessorClockFrequency="2593.91"
+	>
+	<Testing>
+		<StartDateTime>Sep 01 07:19 UTC</StartDateTime>
+		<StartTestTime>1693552779</StartTestTime>
+		<TestList>
+			<Test>./AppTest1</Test>
+			<Test>./AppTest2</Test>
+			<Test>./AppTest3</Test>
+		</TestList>
+		<Test Status="passed">
+			<Name>AppTest1</Name>
+			<Path>.</Path>
+			<FullName>./AppTest1</FullName>
+			<FullCommandLine>/home/vsts/work/1/s/build/bin/app "100"</FullCommandLine>
+			<Results>
+				<NamedMeasurement type="numeric/double" name="Execution Time">
+					<Value>0.00133052</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="numeric/double" name="Processors">
+					<Value>1</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Completion Status">
+					<Value>Completed</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Command Line">
+					<Value>/home/vsts/work/1/s/build/bin/app "100"</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Environment">
+					<Value>#CTEST_RESOURCE_GROUP_COUNT=</Value>
+				</NamedMeasurement>
+				<Measurement>
+					<Value>The sum of 100 and 100 is 200
+The square root of 100 is 10
+</Value>
+				</Measurement>
+			</Results>
+		</Test>
+		<Test Status="passed">
+			<Name>AppTest2</Name>
+			<Path>.</Path>
+			<FullName>./AppTest2</FullName>
+			<FullCommandLine>/home/vsts/work/1/s/build/bin/app "200"</FullCommandLine>
+			<Results>
+				<NamedMeasurement type="numeric/double" name="Execution Time">
+					<Value>0.00133922</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="numeric/double" name="Processors">
+					<Value>1</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Completion Status">
+					<Value>Completed</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Command Line">
+					<Value>/home/vsts/work/1/s/build/bin/app "200"</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Environment">
+					<Value>#CTEST_RESOURCE_GROUP_COUNT=</Value>
+				</NamedMeasurement>
+				<Measurement>
+					<Value>The sum of 200 and 200 is 400
+The square root of 200 is 14.1421
+</Value>
+				</Measurement>
+			</Results>
+		</Test>
+		<Test Status="passed">
+			<Name>AppTest3</Name>
+			<Path>.</Path>
+			<FullName>./AppTest3</FullName>
+			<FullCommandLine>/home/vsts/work/1/s/build/bin/app "300"</FullCommandLine>
+			<Results>
+				<NamedMeasurement type="numeric/double" name="Execution Time">
+					<Value>0.00127322</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="numeric/double" name="Processors">
+					<Value>1</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Completion Status">
+					<Value>Completed</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Command Line">
+					<Value>/home/vsts/work/1/s/build/bin/app "300"</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Environment">
+					<Value>#CTEST_RESOURCE_GROUP_COUNT=</Value>
+				</NamedMeasurement>
+				<Measurement>
+					<Value>The sum of 300 and 300 is 600
+The square root of 300 is 17.3205
+</Value>
+				</Measurement>
+			</Results>
+		</Test>
+		<EndDateTime>Sep 01 07:19 UTC</EndDateTime>
+		<EndTestTime>1693552779</EndTestTime>
+		<ElapsedMinutes>0</ElapsedMinutes>
+	</Testing>
+</Site>
