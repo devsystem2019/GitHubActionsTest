@@ -32,7 +32,7 @@ jobs:
                   instance-url: ${{ secrets.SN_INSTANCE_URL }}
                   tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
                   # Job Name
-                  job-name: 'Test' # Should be same name as declared in 'name' clause of the current Stage
+                  job-name: 'integrationTest' # Should be same name as declared in 'name' clause of the current Stage
                   # Github Context
                   context-github: ${{ toJSON(github) }}
                   # XUnit xml report file name with path
@@ -46,7 +46,7 @@ jobs:
                   instance-url: ${{ secrets.SN_INSTANCE_URL }}
                   tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
                   # Job Name
-                  job-name: 'Test' # Should be same name as declared in 'name' clause of the current Stage
+                  job-name: 'integrationTest' # Should be same name as declared in 'name' clause of the current Stage
                   # Github Context
                   context-github: ${{ toJSON(github) }}
                   # XUnit xml report file name with path
@@ -60,7 +60,7 @@ jobs:
                   instance-url: ${{ secrets.SN_INSTANCE_URL }}
                   tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
                   # Job Name
-                  job-name: 'Test' # Should be same name as declared in 'name' clause of the current Stage
+                  job-name: 'integrationTest' # Should be same name as declared in 'name' clause of the current Stage
                   # Github Context
                   context-github: ${{ toJSON(github) }}
                   # XUnit xml report file name with path
@@ -74,7 +74,7 @@ jobs:
                   instance-url: ${{ secrets.SN_INSTANCE_URL }}
                   tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
                   # Job Name
-                  job-name: 'Test' # Should be same name as declared in 'name' clause of the current Stage
+                  job-name: 'integrationTest' # Should be same name as declared in 'name' clause of the current Stage
                   # Github Context
                   context-github: ${{ toJSON(github) }}
                   # XUnit xml report file name with path
@@ -82,7 +82,7 @@ jobs:
                   
   deploy:
     name: Deploy
-    needs: test
+    needs: integrationTest
     runs-on: ubuntu-latest
     steps:     
       - name: ServiceNow Change
