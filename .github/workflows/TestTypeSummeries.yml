@@ -16,8 +16,8 @@ jobs:
     #     name: test-results  # Name for the artifact
     #     path: '**/xunit.xml'  # Use a wildcard pattern to match all xunit.xml files
 
-  test:
-        name: Test
+  integrationTest:
+        name: Integration Tests
         needs: publish-test-results
         runs-on: ubuntu-latest
         steps:
