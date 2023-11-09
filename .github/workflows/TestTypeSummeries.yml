@@ -1,4 +1,4 @@
-name: GitHub Test Type Custom Action
+name: TestTypeSummeries
 
 on: workflow_dispatch
 
@@ -32,7 +32,7 @@ jobs:
                   instance-url: ${{ secrets.SN_INSTANCE_URL }}
                   tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
                   # Job Name
-                  job-name: 'Test' # Should be same name as declared in 'name' clause of the current Stage
+                  job-name: 'IntegrationTest' # Should be same name as declared in 'name' clause of the current Stage
                   # Github Context
                   context-github: ${{ toJSON(github) }}
                   # XUnit xml report file name with path
