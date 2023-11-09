@@ -1,4 +1,4 @@
-name: GitHub Test Custom Action
+name: GitHub Test Type Custom Action
 
 on: workflow_dispatch
 
