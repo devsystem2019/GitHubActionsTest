@@ -1,4 +1,4 @@
-name: TestTypeSummeries
+name: GitHub Test Custom Action
 
 on: workflow_dispatch
 
@@ -16,8 +16,8 @@ jobs:
     #     name: test-results  # Name for the artifact
     #     path: '**/xunit.xml'  # Use a wildcard pattern to match all xunit.xml files
 
-  integrationTest:
-        name: Integration Tests
+  test:
+        name: Test
         needs: publish-test-results
         runs-on: ubuntu-latest
         steps:
@@ -29,10 +29,10 @@ jobs:
               with:
                   devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
                   devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
-                  instance-url: ${{ secrets.SN_INSTANCE_URL }}
-                  tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+                  instance-url: ${{ secrets.SN_INSTANCE_NAME }}
+                  tool-id: ${{ secrets.SN_ORCH_TOOL_ID }}
                   # Job Name
-                  job-name: 'integrationTest' # Should be same name as declared in 'name' clause of the current Stage
+                  job-name: 'Test' # Should be same name as declared in 'name' clause of the current Stage
                   # Github Context
                   context-github: ${{ toJSON(github) }}
                   # XUnit xml report file name with path
@@ -43,46 +43,18 @@ jobs:
             #   with:
             #       devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
             #       devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
-            #       instance-url: ${{ secrets.SN_INSTANCE_URL }}
-            #       tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+            #       instance-url: ${{ secrets.SN_INSTANCE_NAME }}
+            #       tool-id: ${{ secrets.SN_ORCH_TOOL_ID }}
             #       # Job Name
-            #       job-name: 'integrationTest' # Should be same name as declared in 'name' clause of the current Stage
+            #       job-name: 'Test' # Should be same name as declared in 'name' clause of the current Stage
             #       # Github Context
             #       context-github: ${{ toJSON(github) }}
             #       # XUnit xml report file name with path
-            #       xml-report-filename: NUnitFolder/NUnit.xml
-
-            # - name: ServiceNow DevOps NUnit Test Results
-            #   uses: ServiceNow/servicenow-devops-test-report@dev
-            #   with:
-            #       devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
-            #       devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
-            #       instance-url: ${{ secrets.SN_INSTANCE_URL }}
-            #       tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
-            #       # Job Name
-            #       job-name: 'integrationTest' # Should be same name as declared in 'name' clause of the current Stage
-            #       # Github Context
-            #       context-github: ${{ toJSON(github) }}
-            #       # XUnit xml report file name with path
-            #       xml-report-filename: MSTestFolder/MSTest.trx   
-
-            # - name: ServiceNow DevOps NUnit Test Results
-            #   uses: ServiceNow/servicenow-devops-test-report@dev
-            #   with:
-            #       devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
-            #       devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
-            #       instance-url: ${{ secrets.SN_INSTANCE_URL }}
-            #       tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
-            #       # Job Name
-            #       job-name: 'integrationTest' # Should be same name as declared in 'name' clause of the current Stage
-            #       # Github Context
-            #       context-github: ${{ toJSON(github) }}
-            #       # XUnit xml report file name with path
-            #       xml-report-filename: XUnitFolder/Xunit.xml    
+            #       xml-report-filename: NunitFolder/NUnit.xml
                   
   deploy:
     name: Deploy
-    needs: integrationTest
+    needs: test
     runs-on: ubuntu-latest
     steps:     
       - name: ServiceNow Change
@@ -90,8 +62,8 @@ jobs:
         with:
           devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
           devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
-          instance-url: ${{ secrets.SN_INSTANCE_URL }}
-          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+          instance-url: ${{ secrets.SN_INSTANCE_NAME }}
+          tool-id: ${{ secrets.SN_ORCH_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
           job-name: 'Deploy'
           change-request: '{"setCloseCode":"true","attributes":{"short_description":"Automated Software Deployment","description":"Automated Software Deployment.","assignment_group":"a715cd759f2002002920bde8132e7018","implementation_plan":"Software update is tested and results can be found in Test Summaries Tab; When the change is approved the implementation happens automated by the CICD pipeline within the change planned start and end time window.","backout_plan":"When software fails in production, the previous software release will be re-deployed.","test_plan":"Testing if the software was successfully deployed"}}'
