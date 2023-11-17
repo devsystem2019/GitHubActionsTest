@@ -19,7 +19,7 @@ jobs:
             job-name: 'Artifact And Package'
             artifacts: ' [{"name": "com:autoclaims","version": "1.${{ github.run_number }}","semanticVersion": "1.${{ github.run_number }}.0","repositoryName": "${{ github.repository }}"}]'
 
-        - name: Register Package
+        - name: Register Packages
           uses: ServiceNow/servicenow-devops-register-package@main
           with:
             devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
