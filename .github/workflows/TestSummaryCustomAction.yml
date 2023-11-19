@@ -44,7 +44,7 @@ jobs:
           context-github: ${{ toJSON(github) }}
           job-name: 'Integration Tests'
           # NUnit xml report file name with path
-          xml-report-filename: NunitFolder/NUnit.xml  
+          xml-report-filename: NUnitFolder/NUnit.xml 
 
       - name: ServiceNow DevOps NUnit Test Results
         uses: ServiceNow/servicenow-devops-test-report@dev
@@ -56,7 +56,7 @@ jobs:
           context-github: ${{ toJSON(github) }}
           job-name: 'Integration Tests'
           # XUnit xml report file name with path
-          xml-report-filename: XUnitFolder/Xunit.xml  
+          xml-report-filename: XUnitFolder/Xunit.xml 
 
       - name: ServiceNow DevOps NUnit Test Results
         uses: ServiceNow/servicenow-devops-test-report@dev
@@ -68,7 +68,7 @@ jobs:
           context-github: ${{ toJSON(github) }}
           job-name: 'Integration Tests'
           # UnitTest xml report file name with path
-          xml-report-filename: MSTestFolder/MSTest.trx  
+          xml-report-filename: MSTestFolder/MSTest.trx 
 
       - name: ServiceNow DevOps NUnit Test Results
         uses: ServiceNow/servicenow-devops-test-report@dev
@@ -80,4 +80,4 @@ jobs:
           context-github: ${{ toJSON(github) }}
           job-name: 'Integration Tests'
           # XUnit xml report file name with path
-          xml-report-filename: CTestFolder/CTest.xml  
+          xml-report-filename: CTestFolder/CTest.xml 
