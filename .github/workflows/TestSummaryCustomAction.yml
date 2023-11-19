@@ -39,8 +39,8 @@ jobs:
         with:
           devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
           devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
-          instance-url: ${{ secrets.SN_INSTANCE_NAME }}
-          tool-id: ${{ secrets.SN_ORCH_TOOL_ID }}
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
           job-name: 'Integration Tests'
           # NUnit xml report file name with path
@@ -51,8 +51,8 @@ jobs:
         with:
           devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
           devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
-          instance-url: ${{ secrets.SN_INSTANCE_NAME }}
-          tool-id: ${{ secrets.SN_ORCH_TOOL_ID }}
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
           job-name: 'Integration Tests'
           # XUnit xml report file name with path
@@ -63,8 +63,8 @@ jobs:
         with:
           devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
           devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
-          instance-url: ${{ secrets.SN_INSTANCE_NAME }}
-          tool-id: ${{ secrets.SN_ORCH_TOOL_ID }}
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
           job-name: 'Integration Tests'
           # UnitTest xml report file name with path
@@ -75,8 +75,8 @@ jobs:
         with:
           devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
           devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
-          instance-url: ${{ secrets.SN_INSTANCE_NAME }}
-          tool-id: ${{ secrets.SN_ORCH_TOOL_ID }}
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
           job-name: 'Integration Tests'
           # XUnit xml report file name with path
