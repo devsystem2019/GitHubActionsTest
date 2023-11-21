@@ -23,7 +23,7 @@ jobs:
       - name: Run JUnit Tests
         run: mvn test -Dmaven.test.failure.ignore=true surefire-report:report
         
-      - name: ServiceNow DevOps Units Test Results
+      - name: ServiceNow DevOps JUnit Test Results
         uses: ServiceNow/servicenow-devops-test-report@main
         with:
           devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
@@ -39,8 +39,8 @@ jobs:
         with:
           devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
           devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
-          instance-url: ${{ secrets.SN_INSTANCE_NAME }}
-          tool-id: ${{ secrets.SN_ORCH_TOOL_ID }}
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
            # Job Name
           job-name: 'Test' # Should be same name as declared in 'name' clause of the current Stage
            # Github Context
@@ -53,8 +53,8 @@ jobs:
         with:
           devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
           devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
-          instance-url: ${{ secrets.SN_INSTANCE_NAME }}
-          tool-id: ${{ secrets.SN_ORCH_TOOL_ID }}
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
            # Job Name
           job-name: 'Test' # Should be same name as declared in 'name' clause of the current Stage
            # Github Context
@@ -62,13 +62,13 @@ jobs:
                   # XUnit xml report file name with path
           xml-report-filename: XUnitFolder/Xunit.xml    
 
-      - name: ServiceNow DevOps UnitTest Results
+      - name: ServiceNow DevOps MSTest Results
         uses: ServiceNow/servicenow-devops-test-report@dev
         with:
           devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
           devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
-          instance-url: ${{ secrets.SN_INSTANCE_NAME }}
-          tool-id: ${{ secrets.SN_ORCH_TOOL_ID }}
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
            # Job Name
           job-name: 'Test' # Should be same name as declared in 'name' clause of the current Stage
            # Github Context
