@@ -35,7 +35,7 @@ jobs:
           xml-report-filename: target/surefire-reports/testng-results.xml
 
       - name: ServiceNow DevOps NUnit Test Results
-        uses: ServiceNow/servicenow-devops-test-report@main
+        uses: ServiceNow/servicenow-devops-test-report@dev
         with:
           devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
           devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
@@ -46,7 +46,7 @@ jobs:
           xml-report-filename: NUnitFolder/NUnit.xml 
 
       - name: ServiceNow DevOps XUnit Test Results
-        uses: ServiceNow/servicenow-devops-test-report@main
+        uses: ServiceNow/servicenow-devops-test-report@dev
         with:
           devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
           devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
@@ -57,7 +57,7 @@ jobs:
           xml-report-filename: XUnitFolder/Xunit.xml 
           
       - name: ServiceNow DevOps MSTest Test Results
-        uses: ServiceNow/servicenow-devops-test-report@main
+        uses: ServiceNow/servicenow-devops-test-report@dev
         with:
           devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
           devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
