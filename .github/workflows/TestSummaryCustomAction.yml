@@ -23,7 +23,7 @@ jobs:
       - name: Run JUnit Tests
         run: mvn test -Dmaven.test.failure.ignore=true surefire-report:report
         
-      - name: ServiceNow DevOps Units Test Results
+      - name: ServiceNow DevOps Unit Test Results
         uses: ServiceNow/servicenow-devops-test-report@main
         with:
           devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
