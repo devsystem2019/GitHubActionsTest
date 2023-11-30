@@ -21,28 +21,28 @@ jobs:
         run: mvn clean install -DskipTests=true
         
       - name: Sonar Cloud Analysis
-        if: success()
+        if: success() # always() failure() success()
         run: >
-         
-           mvn -B verify -DskipTests sonar:sonar
+            mvn -B verify -DskipTests sonar:sonar
             -Dsonar.projectKey=$SONAR_PROJECT_KEY
             -Dsonar.organization=$SONAR_ORG_KEY
             -Dsonar.host.url=$SONAR_URL
             -Dsonar.login=$SONAR_TOKEN
         env:
-          GITHUB_TOKEN: '${{ secrets.GHP_TOKEN }}'
-          SONAR_TOKEN: '${{ secrets.SONAR_TOKEN }}'
-          SONAR_PROJECT_KEY: '${{ secrets.SONAR_PROJECT_KEY }}'
-          SONAR_URL: '${{ secrets.SONAR_URL }}'
-          SONAR_ORG_KEY: '${{ secrets.SONAR_ORG_KEY }}'
-      - name: ServiceNow DevOps Sonar Scan Results
-        uses: ServiceNow/servicenow-devops-sonar@v1.34.2
+            GITHUB_TOKEN: ${{ secrets.GHP_TOKEN }}
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+            SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+            SONAR_URL: ${{ secrets.SONAR_URL }}
+            SONAR_ORG_KEY: ${{ secrets.SONAR_ORG_KEY }}
+            
+      - name: ServiceNow DevOps Sonar Scan Result
+        uses: ServiceNow/servicenow-devops-sonar@main
         with:
-          instance-url: '${{ secrets.SN_INSTANCE_URL }}'
-          devops-integration-user-name: '${{ secrets.SN_DEVOPS_USER }}'
-          devops-integration-user-password: '${{ secrets.SN_DEVOPS_PASSWORD }}'
-          tool-id: '${{ secrets.SN_ORCHESTRATION_TOOL_ID }}'
-          context-github: '${{ toJSON(github) }}'
+          devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
+          devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
           job-name: 'Build'
-          sonar-host-url: '${{ secrets.SONAR_URL }}'
-          sonar-project-key: '${{ secrets.SONAR_PROJECT_KEY }}'
+          context-github: ${{ toJSON(github) }}
+          sonar-host-url: ${{ secrets.SONAR_URL }}
+          sonar-project-key: ${{ secrets.SONAR_PROJECT_KEY }}
