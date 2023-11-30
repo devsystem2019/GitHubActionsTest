@@ -43,6 +43,6 @@ jobs:
           devops-integration-user-password: '${{ secrets.SN_DEVOPS_PASSWORD }}'
           tool-id: '${{ secrets.SN_ORCHESTRATION_TOOL_ID }}'
           context-github: '${{ toJSON(github) }}'
-          job-name: Test
+          job-name: 'Build'
           sonar-host-url: '${{ secrets.SONAR_URL }}'
           sonar-project-key: '${{ secrets.SONAR_PROJECT_KEY }}'
