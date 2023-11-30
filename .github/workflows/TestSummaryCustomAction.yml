@@ -46,7 +46,7 @@ jobs:
           # Github Context
           context-github: ${{ toJSON(github) }}
            # XUnit xml report file name with path
-          xml-report-filename: NunitFolder/NUnit.xml   
+          xml-report-filename: NUnitFolder/NUnit.xml  
 
       - name: ServiceNow DevOps XUnit Test Results
         uses: ServiceNow/servicenow-devops-test-report@dev
