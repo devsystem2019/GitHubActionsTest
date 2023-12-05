@@ -90,7 +90,7 @@ jobs:
       #      # XUnit xml report file name with path
       #     xml-report-filename: MSTestFolder/MSTest.trx   
 
-      - name: ServiceNow DevOps MSTest Results
+      - name: ServiceNow DevOps CTest Results
         uses: ServiceNow/servicenow-devops-test-report@dev
         with:
           devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
