@@ -1,4 +1,4 @@
-name: TestTypeReports
+name: TestTypeReport
 on:
   workflow_dispatch:
 jobs:        
