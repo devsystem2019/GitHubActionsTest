@@ -18,7 +18,7 @@ jobs:
       - name: Maven Build
         run: mvn clean install -DskipTests=true
       
-      - name: Run JUnit Tests
+      - name: Run JUnit Test
         run: mvn test -Dmaven.test.failure.ignore=true surefire-report:report
 
       - name: ServiceNow DevOps Unit Test Results
