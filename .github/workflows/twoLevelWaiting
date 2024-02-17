@@ -1,1 +1,144 @@
+name: CICD GitHub workflow
+on: workflow_dispatch
+  # push:
+  #   branches: [ "main" ]
+  # pull_request:
+  #   branches: [ "main" ]
+  #   types: [opened, synchronize, reopened]
 
+# on:
+#   schedule:
+#     - cron: '*/2 * * * *'
+
+
+jobs:
+  build:
+    name: 'Build'
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: maven
+    - name: Build with Maven
+      run: mvn clean compile
+
+  test:
+    name: 'Test'
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4.0.0
+        
+    - name: Run Tests with Maven
+      run: mvn -B test --file pom.xml
+
+    - name: ServiceNow DevOps Unit Test Results
+    # You may pin to the exact commit or the version.
+      uses: ServiceNow/servicenow-devops-test-report@dev
+      with:
+          # Devops Integration Token
+          devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
+          # devops-integration-user-name: '${{ secrets.SN_DEVOPS_USER }}'
+          # devops-integration-user-password: '${{ secrets.SN_DEVOPS_PASSWORD }}'
+          # ServiceNow Instance Name
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          # Orchestration Tool Id
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+          # Job Name
+          job-name: 'Test' # Should be same name as declared in 'name' clause of the current Stage
+          # Github Context
+          context-github: ${{ toJSON(github) }}
+          # JUnit xml report file name with path
+          xml-report-filename: target/ # if only JUnit tests, use target/surefire-reports/testng-results.xml
+  # if both JUnit & TestNG tests, use target/surefire-reports/testng-junit-results/testng-results.xml
+
+
+  sonarScan:
+   name: 'Sonar Scan'
+   needs: registerArtifact
+   runs-on: ubuntu-latest
+   steps:
+   - name: Checkout
+     uses: actions/checkout@v4.0.0
+  
+   - name: ServiceNow DevOps Sonar Scan Results
+   # You may pin to the exact commit or the version.     
+     uses: ServiceNow/servicenow-devops-sonar@dev
+     with:
+         # ServiceNow Instance URL
+         instance-url: ${{ secrets.SN_INSTANCE_URL }}
+         # Devops Integration Token
+         # devops-integration-user-name: '${{ secrets.SN_DEVOPS_USER }}'
+         # devops-integration-user-password: '${{ secrets.SN_DEVOPS_PASSWORD }}'
+         devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
+         # Orchestration Tool Id
+         tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+         # Github Context
+         context-github: ${{ toJSON(github) }}
+         # Display Name of the Job
+         job-name: 'Sonar Scan'
+         # Sonar Host URL
+         sonar-host-url: ${{ secrets.SONAR_URL }}
+         # Sonar Project Key
+         sonar-project-key: ${{ secrets.SONAR_PROJECT_KEY }}
+
+  # ServiceNowSecurityScanResults:
+  #   # type of machine to run the job on
+  #   runs-on: ubuntu-latest
+  #   name: ServiceNow Security Scan Results
+  #   needs: sonarScan
+  #   steps:
+  #     - name: ServiceNow DevOps Security Results
+  #       uses: ServiceNow/servicenow-devops-security-result@dev
+  #       with:
+  #           # DevOps Integration Token of GitHub tool created in ServiceNow instance for token based authentication.
+  #           devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
+  #           # devops-integration-user-name: '${{ secrets.SN_DEVOPS_USER }}'
+  #           # devops-integration-user-password: '${{ secrets.SN_DEVOPS_PASSWORD }}'
+  #           # ServiceNow Instance URL
+  #           instance-url: ${{ secrets.SN_INSTANCE_URL }}
+  #           # Orchestration Tool Id
+  #           tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+  #           # GitHub Context
+  #           context-github: ${{ toJSON(github) }}
+  #           # Display Name of the Job
+  #           job-name: 'ServiceNow Security Scan Results'
+  #           security-result-attributes: '{"scanner": "Veracode", "applicationName": "10kflaws-72"}'
+  #           # scanner: Scanning tool and is required e.g. Veracode.
+  #           # applicationName: Name of your Veracode application and is required. This attribute is applicable only for Veracode.
+  #           # buildVersion: Veracode Scan name / build version and is optional. This attribute is applicable only for Veracode.
+  #           # securityToolId: Security tool onboarded in ServiceNow (sys_id of the onboarded security tool) and is optional.
+          
+  Deploy:
+    # jobs that must complete successfully before this job will run
+    needs: ServiceNowSecurityScanResults
+    # type of machine to run the job on
+    runs-on: ubuntu-latest
+    name: 'ServiceNow DevOps Change'
+    steps:
+      - name: ServiceNow Change
+        uses: ServiceNow/servicenow-devops-change@dev
+        with:
+          # Devops Integration Token
+          devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
+          # devops-integration-user-name: '${{ secrets.SN_DEVOPS_USER }}'
+          # devops-integration-user-password: '${{ secrets.SN_DEVOPS_PASSWORD }}'
+          # ServiceNow Instance URL
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          # Orchestration Tool Id
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+          # GitHub Context
+          context-github: ${{ toJSON(github) }}
+          # Display Name of the Job
+          job-name: 'ServiceNow DevOps Change'
+          change-request: '{"attributes":{"chg_model":{"name":"devops"}, "requested_by":{"name": "DevOps System"},"assignment_group":{"name": "Change management"},"priority": "2","comments": "This is a sample pipeline script to be added in your change step","work_notes": "Update this to work_notes"}}'
+          # You can specify the requested_by attribute either with name or sys_id. Example: "requested_by":{"name": "Test User"} or "requested_by": "62826bf03710200044e0bfc8bcbe5df1"
+          # You can specify the assignment_group attribute either with name or sys_id. Example: "assignment_group":{"name": "Change Approval Team"} or "assignment_group": "5f721d93c0a8010e015533746de18bf9"
+          # start_date: Enter the planned start date
+          # end_date: Enter the planned end date
