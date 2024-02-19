@@ -56,7 +56,7 @@ jobs:
           context-github: ${{ toJSON(github) }}
           # JUnit xml report file name with path
           xml-report-filename: target/ # if only JUnit tests, use target/surefire-reports/testng-results.xml
-  # if both JUnit & TestNG tests, use target/surefire-reports/testng-junit-results/testng-results.xml
+  # if both JUnit & TestNG tests,use target/surefire-reports/testng-junit-results/testng-results.xml
 
 
   sonarScan:
