@@ -1,0 +1,121 @@
+name: Push Build to Artifactory
+
+
+on: workflow_dispatch 
+
+
+jobs:
+ build:
+   runs-on: ubuntu-latest
+  
+   steps:
+   # This action checks out the code from the repository
+   - name: Checkout Code
+     uses: actions/checkout@v2
+
+
+   # This action sets up the JFrog CLI with the Artifactory URL and access token     
+   - uses: jfrog/setup-jfrog-cli@v3
+     env:
+       JF_URL: "https://venkata7.jfrog.io"
+       JF_ACCESS_TOKEN: "eyJ2ZXIiOiIyIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYiLCJraWQiOiJmUHhRTTk0ZGQ1eW1rellOcV95R3d5ak82T2RvZFhzTDF5YWJDVm5GdWtrIn0.eyJzdWIiOiJqZmFjQDAxaHN4MTJ3Z2ZtMTVjMDRuYXpqNGcwMnJtL3VzZXJzL2FkbWluIiwic2NwIjoiYXBwbGllZC1wZXJtaXNzaW9ucy9hZG1pbiIsImF1ZCI6IipAKiIsImlzcyI6ImpmZmVAMDFoc3gxMndnZm0xNWMwNG5hemo0ZzAycm0iLCJpYXQiOjE3MTE2OTQ4MDIsImp0aSI6IjBjNmFjZmNjLWFjMzItNDY0OS04NmJiLWIzMWZkYjQxNjk3ZCJ9.GCn1a1rw8W_mZPyv_B18KFByVAoqJ8jUMMBC-vsrn-31GOOjLeWKSSWherKHfHCgihi2EvVQ-mDe41KBlVcE7C0S_PDRl4oIGp9eT1qnjwbkkEy1xJ1ijnGZ9iSItQ7rBwGySa1HyT-3JnbXwWQ4K4qsnUDFsS7NYFnyOjv15skr2tV558FCGPxS_223z_CMj7Qz7OxgnqezobZmFv6VNK3e8u9CCKCR5M9KSdfpAXTBjZCkzhC8xkLurkgZwl-y_Xo3yzxdWit6LyVh5bBc1c-kWsClEoFzB3-tGPJjgl8LFspwtq7aNJeDDFbhvFY8WXtaZAM40tnG6R-F_iXbJw"
+
+
+   # This command adds a new server configuration to the JFrog CLI   
+   - run: |
+       export SERVER_ID="venkata7"
+       jf c add $SERVER_ID --url="https://venkata7.jfrog.io" --access-token="eyJ2ZXIiOiIyIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYiLCJraWQiOiJmUHhRTTk0ZGQ1eW1rellOcV95R3d5ak82T2RvZFhzTDF5YWJDVm5GdWtrIn0.eyJzdWIiOiJqZmFjQDAxaHN4MTJ3Z2ZtMTVjMDRuYXpqNGcwMnJtL3VzZXJzL2FkbWluIiwic2NwIjoiYXBwbGllZC1wZXJtaXNzaW9ucy9hZG1pbiIsImF1ZCI6IipAKiIsImlzcyI6ImpmZmVAMDFoc3gxMndnZm0xNWMwNG5hemo0ZzAycm0iLCJpYXQiOjE3MTE2OTQ4MDIsImp0aSI6IjBjNmFjZmNjLWFjMzItNDY0OS04NmJiLWIzMWZkYjQxNjk3ZCJ9.GCn1a1rw8W_mZPyv_B18KFByVAoqJ8jUMMBC-vsrn-31GOOjLeWKSSWherKHfHCgihi2EvVQ-mDe41KBlVcE7C0S_PDRl4oIGp9eT1qnjwbkkEy1xJ1ijnGZ9iSItQ7rBwGySa1HyT-3JnbXwWQ4K4qsnUDFsS7NYFnyOjv15skr2tV558FCGPxS_223z_CMj7Qz7OxgnqezobZmFv6VNK3e8u9CCKCR5M9KSdfpAXTBjZCkzhC8xkLurkgZwl-y_Xo3yzxdWit6LyVh5bBc1c-kWsClEoFzB3-tGPJjgl8LFspwtq7aNJeDDFbhvFY8WXtaZAM40tnG6R-F_iXbJw" --interactive=false
+
+
+   - name: Run JFrog CLI Ping
+     run: |
+          export JFROG_CLI_HOME="/home/runner/work/jenkins-test/jenkins-test"
+          jf rt u "Jenkinsfile" "tf-trial/workspaces/jfrog-ws1/"
+          # Collect environment variables for the build
+          jf rt bce
+          # Publish build info
+          jf rt bp
+
+          jf rt u "BulkCommitDir/randfile_1_2022_05_14_08_54_1652498687.txt" "tf-trial/workspaces/jfrog-ws1/"
+          # Collect environment variables for the build
+          jf rt bce
+          # Publish build info
+          jf rt bp
+   # - name: Download Artifact
+   #   run: |
+   #        jf rt dl tf-trial/workspaces/jfrog-ws1/README.md ./ 
+   #        jf rt bp
+
+
+   - name: Display structure of downloaded files of Artifact 
+     run: ls -R
+     working-directory: ${{ github.workspace }}
+
+ test:
+        name: Test
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+        - name: Checkout Code
+          uses: actions/checkout@v2
+
+
+   # This action sets up the JFrog CLI with the Artifactory URL and access token     
+        - uses: jfrog/setup-jfrog-cli@v3
+          env:
+           JF_URL: "https://venkata7.jfrog.io"
+           JF_ACCESS_TOKEN: "eyJ2ZXIiOiIyIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYiLCJraWQiOiJmUHhRTTk0ZGQ1eW1rellOcV95R3d5ak82T2RvZFhzTDF5YWJDVm5GdWtrIn0.eyJzdWIiOiJqZmFjQDAxaHN4MTJ3Z2ZtMTVjMDRuYXpqNGcwMnJtL3VzZXJzL2FkbWluIiwic2NwIjoiYXBwbGllZC1wZXJtaXNzaW9ucy9hZG1pbiIsImF1ZCI6IipAKiIsImlzcyI6ImpmZmVAMDFoc3gxMndnZm0xNWMwNG5hemo0ZzAycm0iLCJpYXQiOjE3MTE2OTQ4MDIsImp0aSI6IjBjNmFjZmNjLWFjMzItNDY0OS04NmJiLWIzMWZkYjQxNjk3ZCJ9.GCn1a1rw8W_mZPyv_B18KFByVAoqJ8jUMMBC-vsrn-31GOOjLeWKSSWherKHfHCgihi2EvVQ-mDe41KBlVcE7C0S_PDRl4oIGp9eT1qnjwbkkEy1xJ1ijnGZ9iSItQ7rBwGySa1HyT-3JnbXwWQ4K4qsnUDFsS7NYFnyOjv15skr2tV558FCGPxS_223z_CMj7Qz7OxgnqezobZmFv6VNK3e8u9CCKCR5M9KSdfpAXTBjZCkzhC8xkLurkgZwl-y_Xo3yzxdWit6LyVh5bBc1c-kWsClEoFzB3-tGPJjgl8LFspwtq7aNJeDDFbhvFY8WXtaZAM40tnG6R-F_iXbJw"
+
+
+   # This command adds a new server configuration to the JFrog CLI   
+        - run: |
+            export SERVER_ID="venkata7"
+            jf c add $SERVER_ID --url="https://venkata14.jfrog.io" --access-token="eyJ2ZXIiOiIyIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYiLCJraWQiOiJmUHhRTTk0ZGQ1eW1rellOcV95R3d5ak82T2RvZFhzTDF5YWJDVm5GdWtrIn0.eyJzdWIiOiJqZmFjQDAxaHN4MTJ3Z2ZtMTVjMDRuYXpqNGcwMnJtL3VzZXJzL2FkbWluIiwic2NwIjoiYXBwbGllZC1wZXJtaXNzaW9ucy9hZG1pbiIsImF1ZCI6IipAKiIsImlzcyI6ImpmZmVAMDFoc3gxMndnZm0xNWMwNG5hemo0ZzAycm0iLCJpYXQiOjE3MTE2OTQ4MDIsImp0aSI6IjBjNmFjZmNjLWFjMzItNDY0OS04NmJiLWIzMWZkYjQxNjk3ZCJ9.GCn1a1rw8W_mZPyv_B18KFByVAoqJ8jUMMBC-vsrn-31GOOjLeWKSSWherKHfHCgihi2EvVQ-mDe41KBlVcE7C0S_PDRl4oIGp9eT1qnjwbkkEy1xJ1ijnGZ9iSItQ7rBwGySa1HyT-3JnbXwWQ4K4qsnUDFsS7NYFnyOjv15skr2tV558FCGPxS_223z_CMj7Qz7OxgnqezobZmFv6VNK3e8u9CCKCR5M9KSdfpAXTBjZCkzhC8xkLurkgZwl-y_Xo3yzxdWit6LyVh5bBc1c-kWsClEoFzB3-tGPJjgl8LFspwtq7aNJeDDFbhvFY8WXtaZAM40tnG6R-F_iXbJw" --interactive=false
+        - name: Download Artifact
+          run: |
+            jf rt dl tf-trial/workspaces/jfrog-ws1/Jenkinsfile1
+            jf rt bp
+
+        
+
+ deploy:
+        name: Deploy
+        needs: build
+        runs-on: ubuntu-latest
+        steps:     
+            - name: ServiceNow DevOps Change Automation
+            # You may pin to the exact commit or the version.
+              uses: ServiceNow/servicenow-devops-change@dev
+              with:
+                  # ServiceNow Instance URL
+                  instance-url: ${{ secrets.SN_INSTANCE_URL }}
+                  # # # Devops Integration User Name
+                  # devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
+                  # # # Devops Integration User Password
+                  # devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+                  # Devops Integration User Name
+                  devops-integration-token: ${{ secrets.SN_INSTANCE_TOKEN }}
+                  # Orchestration Tool Id
+                  tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+                  # Display Name of the Job
+                  job-name: 'Deploy'
+                  # Github Context
+                  context-github: ${{ toJSON(github) }}
+                  # The max. time in seconds to wait until the action should fail.
+                  timeout: 3600
+                  # The time in seconds to wait between trying the API.
+                  interval: 5
+                  # The customized inputs to create change with the requested details.
+                  change-request: '{
+                      "setCloseCode": "true",
+                      "attributes": {
+                          "short_description": "Automated Software Deployment",
+                          "description": "Automated Software Deployment.",
+                          "assignment_group": "a715cd759f2002002920bde8132e7018",
+                          "implementation_plan": "Software update is tested and results can be found in Test Summaries Tab.",
+                          "backout_plan": "When software fails in production, the previous software release will be re-deployed.",
+                          "test_plan": "Testing if the software was successfully deployed"
+                      }
+                  }'
+
+  
