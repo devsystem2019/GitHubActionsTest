@@ -5,7 +5,7 @@ on: workflow_dispatch
 
 
 jobs:
- build:
+ publish:
    runs-on: ubuntu-latest
   
    steps:
@@ -42,9 +42,9 @@ jobs:
      run: ls -R
      working-directory: ${{ github.workspace }}
 
- test:
-        name: Test
-        needs: build
+ download:
+        name: Download
+        needs: publish
         runs-on: ubuntu-latest
         steps:
         - name: Checkout Code
@@ -71,7 +71,7 @@ jobs:
 
  deploy:
         name: Deploy
-        needs: build
+        needs: download
         runs-on: ubuntu-latest
         steps:     
             - name: ServiceNow DevOps Change Automation
