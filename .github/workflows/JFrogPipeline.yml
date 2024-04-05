@@ -17,14 +17,14 @@ jobs:
    # This action sets up the JFrog CLI with the Artifactory URL and access token     
    - uses: jfrog/setup-jfrog-cli@v3
      env:
-       JF_URL: "https://venkata7.jfrog.io"
+       JF_URL: "https://servicenowdemo.jfrog.io"
        JF_ACCESS_TOKEN: "eyJ2ZXIiOiIyIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYiLCJraWQiOiJmUHhRTTk0ZGQ1eW1rellOcV95R3d5ak82T2RvZFhzTDF5YWJDVm5GdWtrIn0.eyJzdWIiOiJqZmFjQDAxaHN4MTJ3Z2ZtMTVjMDRuYXpqNGcwMnJtL3VzZXJzL2FkbWluIiwic2NwIjoiYXBwbGllZC1wZXJtaXNzaW9ucy9hZG1pbiIsImF1ZCI6IipAKiIsImlzcyI6ImpmZmVAMDFoc3gxMndnZm0xNWMwNG5hemo0ZzAycm0iLCJpYXQiOjE3MTE2OTQ4MDIsImp0aSI6IjBjNmFjZmNjLWFjMzItNDY0OS04NmJiLWIzMWZkYjQxNjk3ZCJ9.GCn1a1rw8W_mZPyv_B18KFByVAoqJ8jUMMBC-vsrn-31GOOjLeWKSSWherKHfHCgihi2EvVQ-mDe41KBlVcE7C0S_PDRl4oIGp9eT1qnjwbkkEy1xJ1ijnGZ9iSItQ7rBwGySa1HyT-3JnbXwWQ4K4qsnUDFsS7NYFnyOjv15skr2tV558FCGPxS_223z_CMj7Qz7OxgnqezobZmFv6VNK3e8u9CCKCR5M9KSdfpAXTBjZCkzhC8xkLurkgZwl-y_Xo3yzxdWit6LyVh5bBc1c-kWsClEoFzB3-tGPJjgl8LFspwtq7aNJeDDFbhvFY8WXtaZAM40tnG6R-F_iXbJw"
 
 
    # This command adds a new server configuration to the JFrog CLI   
    - run: |
-       export SERVER_ID="venkata7"
-       jf c add $SERVER_ID --url="https://venkata7.jfrog.io" --access-token="eyJ2ZXIiOiIyIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYiLCJraWQiOiJmUHhRTTk0ZGQ1eW1rellOcV95R3d5ak82T2RvZFhzTDF5YWJDVm5GdWtrIn0.eyJzdWIiOiJqZmFjQDAxaHN4MTJ3Z2ZtMTVjMDRuYXpqNGcwMnJtL3VzZXJzL2FkbWluIiwic2NwIjoiYXBwbGllZC1wZXJtaXNzaW9ucy9hZG1pbiIsImF1ZCI6IipAKiIsImlzcyI6ImpmZmVAMDFoc3gxMndnZm0xNWMwNG5hemo0ZzAycm0iLCJpYXQiOjE3MTE2OTQ4MDIsImp0aSI6IjBjNmFjZmNjLWFjMzItNDY0OS04NmJiLWIzMWZkYjQxNjk3ZCJ9.GCn1a1rw8W_mZPyv_B18KFByVAoqJ8jUMMBC-vsrn-31GOOjLeWKSSWherKHfHCgihi2EvVQ-mDe41KBlVcE7C0S_PDRl4oIGp9eT1qnjwbkkEy1xJ1ijnGZ9iSItQ7rBwGySa1HyT-3JnbXwWQ4K4qsnUDFsS7NYFnyOjv15skr2tV558FCGPxS_223z_CMj7Qz7OxgnqezobZmFv6VNK3e8u9CCKCR5M9KSdfpAXTBjZCkzhC8xkLurkgZwl-y_Xo3yzxdWit6LyVh5bBc1c-kWsClEoFzB3-tGPJjgl8LFspwtq7aNJeDDFbhvFY8WXtaZAM40tnG6R-F_iXbJw" --interactive=false
+       export SERVER_ID="servicenowdemo"
+       jf c add $SERVER_ID --url="https://servicenowdemo.jfrog.io" --access-token="eyJ2ZXIiOiIyIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYiLCJraWQiOiJmUHhRTTk0ZGQ1eW1rellOcV95R3d5ak82T2RvZFhzTDF5YWJDVm5GdWtrIn0.eyJzdWIiOiJqZmFjQDAxaHN4MTJ3Z2ZtMTVjMDRuYXpqNGcwMnJtL3VzZXJzL2FkbWluIiwic2NwIjoiYXBwbGllZC1wZXJtaXNzaW9ucy9hZG1pbiIsImF1ZCI6IipAKiIsImlzcyI6ImpmZmVAMDFoc3gxMndnZm0xNWMwNG5hemo0ZzAycm0iLCJpYXQiOjE3MTE2OTQ4MDIsImp0aSI6IjBjNmFjZmNjLWFjMzItNDY0OS04NmJiLWIzMWZkYjQxNjk3ZCJ9.GCn1a1rw8W_mZPyv_B18KFByVAoqJ8jUMMBC-vsrn-31GOOjLeWKSSWherKHfHCgihi2EvVQ-mDe41KBlVcE7C0S_PDRl4oIGp9eT1qnjwbkkEy1xJ1ijnGZ9iSItQ7rBwGySa1HyT-3JnbXwWQ4K4qsnUDFsS7NYFnyOjv15skr2tV558FCGPxS_223z_CMj7Qz7OxgnqezobZmFv6VNK3e8u9CCKCR5M9KSdfpAXTBjZCkzhC8xkLurkgZwl-y_Xo3yzxdWit6LyVh5bBc1c-kWsClEoFzB3-tGPJjgl8LFspwtq7aNJeDDFbhvFY8WXtaZAM40tnG6R-F_iXbJw" --interactive=false
 
 
    - name: Run JFrog CLI Ping
@@ -63,14 +63,14 @@ jobs:
    # This action sets up the JFrog CLI with the Artifactory URL and access token     
         - uses: jfrog/setup-jfrog-cli@v3
           env:
-           JF_URL: "https://venkata7.jfrog.io"
+           JF_URL: "https://servicenowdemo.jfrog.io"
            JF_ACCESS_TOKEN: "eyJ2ZXIiOiIyIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYiLCJraWQiOiJmUHhRTTk0ZGQ1eW1rellOcV95R3d5ak82T2RvZFhzTDF5YWJDVm5GdWtrIn0.eyJzdWIiOiJqZmFjQDAxaHN4MTJ3Z2ZtMTVjMDRuYXpqNGcwMnJtL3VzZXJzL2FkbWluIiwic2NwIjoiYXBwbGllZC1wZXJtaXNzaW9ucy9hZG1pbiIsImF1ZCI6IipAKiIsImlzcyI6ImpmZmVAMDFoc3gxMndnZm0xNWMwNG5hemo0ZzAycm0iLCJpYXQiOjE3MTE2OTQ4MDIsImp0aSI6IjBjNmFjZmNjLWFjMzItNDY0OS04NmJiLWIzMWZkYjQxNjk3ZCJ9.GCn1a1rw8W_mZPyv_B18KFByVAoqJ8jUMMBC-vsrn-31GOOjLeWKSSWherKHfHCgihi2EvVQ-mDe41KBlVcE7C0S_PDRl4oIGp9eT1qnjwbkkEy1xJ1ijnGZ9iSItQ7rBwGySa1HyT-3JnbXwWQ4K4qsnUDFsS7NYFnyOjv15skr2tV558FCGPxS_223z_CMj7Qz7OxgnqezobZmFv6VNK3e8u9CCKCR5M9KSdfpAXTBjZCkzhC8xkLurkgZwl-y_Xo3yzxdWit6LyVh5bBc1c-kWsClEoFzB3-tGPJjgl8LFspwtq7aNJeDDFbhvFY8WXtaZAM40tnG6R-F_iXbJw"
 
 
    # This command adds a new server configuration to the JFrog CLI   
         - run: |
-            export SERVER_ID="venkata7"
-            jf c add $SERVER_ID --url="https://venkata14.jfrog.io" --access-token="eyJ2ZXIiOiIyIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYiLCJraWQiOiJmUHhRTTk0ZGQ1eW1rellOcV95R3d5ak82T2RvZFhzTDF5YWJDVm5GdWtrIn0.eyJzdWIiOiJqZmFjQDAxaHN4MTJ3Z2ZtMTVjMDRuYXpqNGcwMnJtL3VzZXJzL2FkbWluIiwic2NwIjoiYXBwbGllZC1wZXJtaXNzaW9ucy9hZG1pbiIsImF1ZCI6IipAKiIsImlzcyI6ImpmZmVAMDFoc3gxMndnZm0xNWMwNG5hemo0ZzAycm0iLCJpYXQiOjE3MTE2OTQ4MDIsImp0aSI6IjBjNmFjZmNjLWFjMzItNDY0OS04NmJiLWIzMWZkYjQxNjk3ZCJ9.GCn1a1rw8W_mZPyv_B18KFByVAoqJ8jUMMBC-vsrn-31GOOjLeWKSSWherKHfHCgihi2EvVQ-mDe41KBlVcE7C0S_PDRl4oIGp9eT1qnjwbkkEy1xJ1ijnGZ9iSItQ7rBwGySa1HyT-3JnbXwWQ4K4qsnUDFsS7NYFnyOjv15skr2tV558FCGPxS_223z_CMj7Qz7OxgnqezobZmFv6VNK3e8u9CCKCR5M9KSdfpAXTBjZCkzhC8xkLurkgZwl-y_Xo3yzxdWit6LyVh5bBc1c-kWsClEoFzB3-tGPJjgl8LFspwtq7aNJeDDFbhvFY8WXtaZAM40tnG6R-F_iXbJw" --interactive=false
+            export SERVER_ID="servicenowdemo"
+            jf c add $SERVER_ID --url="https://servicenowdemo.jfrog.io" --access-token="eyJ2ZXIiOiIyIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYiLCJraWQiOiJmUHhRTTk0ZGQ1eW1rellOcV95R3d5ak82T2RvZFhzTDF5YWJDVm5GdWtrIn0.eyJzdWIiOiJqZmFjQDAxaHN4MTJ3Z2ZtMTVjMDRuYXpqNGcwMnJtL3VzZXJzL2FkbWluIiwic2NwIjoiYXBwbGllZC1wZXJtaXNzaW9ucy9hZG1pbiIsImF1ZCI6IipAKiIsImlzcyI6ImpmZmVAMDFoc3gxMndnZm0xNWMwNG5hemo0ZzAycm0iLCJpYXQiOjE3MTE2OTQ4MDIsImp0aSI6IjBjNmFjZmNjLWFjMzItNDY0OS04NmJiLWIzMWZkYjQxNjk3ZCJ9.GCn1a1rw8W_mZPyv_B18KFByVAoqJ8jUMMBC-vsrn-31GOOjLeWKSSWherKHfHCgihi2EvVQ-mDe41KBlVcE7C0S_PDRl4oIGp9eT1qnjwbkkEy1xJ1ijnGZ9iSItQ7rBwGySa1HyT-3JnbXwWQ4K4qsnUDFsS7NYFnyOjv15skr2tV558FCGPxS_223z_CMj7Qz7OxgnqezobZmFv6VNK3e8u9CCKCR5M9KSdfpAXTBjZCkzhC8xkLurkgZwl-y_Xo3yzxdWit6LyVh5bBc1c-kWsClEoFzB3-tGPJjgl8LFspwtq7aNJeDDFbhvFY8WXtaZAM40tnG6R-F_iXbJw" --interactive=false
         - name: Download Artifact
           run: |
             jf rt dl tf-trial/workspaces/jfrog-ws1/Jenkinsfile1
