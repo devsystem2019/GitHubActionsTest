@@ -3,3 +3,4 @@ This is dummy scratchpad file to have new commits.
 2
 
 Github Commit1
+Github Commit2
