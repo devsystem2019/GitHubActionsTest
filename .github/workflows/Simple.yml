@@ -2,6 +2,7 @@ name: Simple
  
 on:
   workflow_dispatch:
+#RC1
 jobs:           
   build:
     name: Build
