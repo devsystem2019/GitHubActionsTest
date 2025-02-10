@@ -11,8 +11,9 @@ jobs:
         - name: Register Artifact
           uses: ServiceNow/servicenow-devops-register-artifact@main
           with:
-            devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
-            devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+            # devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
+            # devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+            devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
             instance-url: ${{ secrets.SN_INSTANCE_URL }}
             tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
             context-github: ${{ toJSON(github) }}
@@ -22,8 +23,9 @@ jobs:
         - name: Register Packages
           uses: ServiceNow/servicenow-devops-register-package@main
           with:
-            devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
-            devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+            # devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
+            # devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+            devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
             instance-url: ${{ secrets.SN_INSTANCE_URL }}
             tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
             context-github: ${{ toJSON(github) }}
