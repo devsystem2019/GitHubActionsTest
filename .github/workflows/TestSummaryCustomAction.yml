@@ -91,17 +91,17 @@ jobs:
       #      # XUnit xml report file name with path
       #     xml-report-filename: MSTestFolder/MSTest.trx   
 
-      - name: ServiceNow DevOps CTest Results
-        uses: ServiceNow/servicenow-devops-test-report@dev
-        with:
-          # devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
-          # devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
-          devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
-          instance-url: ${{ secrets.SN_INSTANCE_URL }}
-          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
-          # Job Name
-          job-name: 'Integration Tests' # Should be same name as declared in 'name' clause of the current Stage
-          # Github Context
-          context-github: ${{ toJSON(github) }}
-           # XUnit xml report file name with path
-          xml-report-filename: CTestFolder/CTest.xml
+      # - name: ServiceNow DevOps CTest Results
+      #   uses: ServiceNow/servicenow-devops-test-report@dev
+      #   with:
+      #     # devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
+      #     # devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+      #     devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
+      #     instance-url: ${{ secrets.SN_INSTANCE_URL }}
+      #     tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+      #     # Job Name
+      #     job-name: 'Integration Tests' # Should be same name as declared in 'name' clause of the current Stage
+      #     # Github Context
+      #     context-github: ${{ toJSON(github) }}
+      #      # XUnit xml report file name with path
+      #     xml-report-filename: CTestFolder/CTest.xml
