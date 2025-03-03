@@ -26,70 +26,70 @@ jobs:
       - name: ServiceNow DevOps Unit Test Result
         uses: ServiceNow/servicenow-devops-test-report@main
         with:
-          # devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
-          # devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
-          devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
+          devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
+          devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+          # devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
           instance-url: ${{ secrets.SN_INSTANCE_URL }}
           tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
           context-github: ${{ toJSON(github) }}
           job-name: 'Integration Tests'
           xml-report-filename: target/surefire-reports/testng-results.xml
 
-      # - name: ServiceNow DevOps NUnit Test Results
-      #   uses: ServiceNow/servicenow-devops-test-report@dev
-      #   with:
-      #     devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
-      #     devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
-      #     instance-url: ${{ secrets.SN_INSTANCE_URL }}
-      #     tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
-      #     # Job Name
-      #     job-name: 'Integration Tests' # Should be same name as declared in 'name' clause of the current Stage
-      #     # Github Context
-      #     context-github: ${{ toJSON(github) }}
-      #      # XUnit xml report file name with path
-      #     xml-report-filename: NUnitFolder/NUnit.xml  
+      - name: ServiceNow DevOps NUnit Test Results
+        uses: ServiceNow/servicenow-devops-test-report@dev
+        with:
+          devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
+          devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+          # Job Name
+          job-name: 'Integration Tests' # Should be same name as declared in 'name' clause of the current Stage
+          # Github Context
+          context-github: ${{ toJSON(github) }}
+           # XUnit xml report file name with path
+          xml-report-filename: NUnitFolder/NUnit.xml  
 
-      # - name: ServiceNow DevOps XUnit Test Results
-      #   uses: ServiceNow/servicenow-devops-test-report@dev
-      #   with:
-      #     devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
-      #     devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
-      #     instance-url: ${{ secrets.SN_INSTANCE_URL }}
-      #     tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
-      #     # Job Name
-      #     job-name: 'Integration Tests' # Should be same name as declared in 'name' clause of the current Stage
-      #     # Github Context
-      #     context-github: ${{ toJSON(github) }}
-      #      # XUnit xml report file name with path
-      #     xml-report-filename: XUnitFolder/Xunit.xml   
+      - name: ServiceNow DevOps XUnit Test Results
+        uses: ServiceNow/servicenow-devops-test-report@dev
+        with:
+          devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
+          devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+          # Job Name
+          job-name: 'Integration Tests' # Should be same name as declared in 'name' clause of the current Stage
+          # Github Context
+          context-github: ${{ toJSON(github) }}
+           # XUnit xml report file name with path
+          xml-report-filename: XUnitFolder/Xunit.xml   
 
-      # - name: ServiceNow DevOps Jest Test Results
-      #   uses: ServiceNow/servicenow-devops-test-report@dev
-      #   with:
-      #     devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
-      #     devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
-      #     instance-url: ${{ secrets.SN_INSTANCE_URL }}
-      #     tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
-      #     # Job Name
-      #     job-name: 'Integration Tests' # Should be same name as declared in 'name' clause of the current Stage
-      #     # Github Context
-      #     context-github: ${{ toJSON(github) }}
-      #      # XUnit xml report file name with path
-      #     xml-report-filename: JestFolder/jest-junit.xml    
+      - name: ServiceNow DevOps Jest Test Results
+        uses: ServiceNow/servicenow-devops-test-report@dev
+        with:
+          devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
+          devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+          # Job Name
+          job-name: 'Integration Tests' # Should be same name as declared in 'name' clause of the current Stage
+          # Github Context
+          context-github: ${{ toJSON(github) }}
+           # XUnit xml report file name with path
+          xml-report-filename: JestFolder/jest-junit.xml    
 
-      # - name: ServiceNow DevOps MSTest Results
-      #   uses: ServiceNow/servicenow-devops-test-report@dev
-      #   with:
-      #     devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
-      #     devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
-      #     instance-url: ${{ secrets.SN_INSTANCE_URL }}
-      #     tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
-      #     # Job Name
-      #     job-name: 'Integration Tests' # Should be same name as declared in 'name' clause of the current Stage
-      #     # Github Context
-      #     context-github: ${{ toJSON(github) }}
-      #      # XUnit xml report file name with path
-      #     xml-report-filename: MSTestFolder/MSTest.trx   
+      - name: ServiceNow DevOps MSTest Results
+        uses: ServiceNow/servicenow-devops-test-report@dev
+        with:
+          devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
+          devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+          # Job Name
+          job-name: 'Integration Tests' # Should be same name as declared in 'name' clause of the current Stage
+          # Github Context
+          context-github: ${{ toJSON(github) }}
+           # XUnit xml report file name with path
+          xml-report-filename: MSTestFolder/MSTest.trx   
 
       # - name: ServiceNow DevOps CTest Results
       #   uses: ServiceNow/servicenow-devops-test-report@dev
