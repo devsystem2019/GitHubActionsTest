@@ -30,7 +30,7 @@ jobs:
             -Dsonar.host.url=$SONAR_URL
             -Dsonar.login=$SONAR_TOKEN
         env:
-          GITHUB_TOKEN: '${{ secrets.GHP_TOKEN }}'
+          # GITHUB_TOKEN: '${{ secrets.GHP_TOKEN }}'
           SONAR_TOKEN: '${{ secrets.SONAR_TOKEN }}'
           SONAR_PROJECT_KEY: '${{ secrets.SONAR_PROJECT_KEY }}'
           SONAR_URL: '${{ secrets.SONAR_URL }}'
