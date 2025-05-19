@@ -1,0 +1,88 @@
+# This workflow uses ServiceNow custom actions that are certified by ServiceNow.
+
+name: custom actions workflow
+on: workflow_dispatch
+  # push:
+  #   branches: [ "main" ]
+  # pull_request:
+  #   branches: [ "main" ]
+  #   types: [opened, synchronize, reopened]
+
+jobs:
+  VeracodeSecurityScanResults:
+    name: 'ServiceNow Security Scan Results'
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: maven
+    - name: Build with Maven
+      run: mvn clean install -DskipTests=true
+
+    - name: ServiceNow DevOps Security Results
+      uses: ServiceNow/servicenow-devops-security-result@v3.0.0
+      with:
+          # DevOps Integration Token of GitHub tool created in ServiceNow instance for token based authentication.
+          devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
+          # ServiceNow Instance URL
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          # Orchestration Tool Id
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+          # GitHub Context
+          context-github: ${{ toJSON(github) }}
+          # Display Name of the Job
+          job-name: 'ServiceNow Security Scan Results'
+          security-result-attributes: '{"scanner": "Veracode", "applicationName": "PetStoreAPI-Github"}'
+          # scanner: Scanning tool and is required e.g. Veracode.
+          # applicationName: Name of your Veracode application and is required. This attribute is applicable only for Veracode.
+          # buildVersion: Veracode Scan name / build version and is optional. This attribute is applicable only for Veracode.
+          # securityToolId: Security tool onboarded in ServiceNow (sys_id of the onboarded security tool) and is optional
+    build:
+    name: Build
+    needs: VeracodeSecurityScanResults
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo Run integration tests.
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      
+      - name: Setup Java JDK for Sonar Cloud
+        uses: actions/setup-java@v4.2.1
+        with:
+          distribution: 'oracle'
+          java-version: '17'
+      
+      - name: Maven Build
+        run: mvn clean install -DskipTests=true
+        
+      - name: Sonar Cloud Analysis
+        if: success() # always() failure() success()
+        run: >
+            mvn -B verify -DskipTests sonar:sonar
+            -Dsonar.projectKey=$SONAR_PROJECT_KEY
+            -Dsonar.organization=$SONAR_ORG_KEY
+            -Dsonar.host.url=$SONAR_URL
+            -Dsonar.login=$SONAR_TOKEN
+        env:
+          # GITHUB_TOKEN: '${{ secrets.GHP_TOKEN }}'
+          SONAR_TOKEN: '${{ secrets.SONAR_TOKEN }}'
+          SONAR_PROJECT_KEY: '${{ secrets.SONAR_PROJECT_KEY }}'
+          SONAR_URL: '${{ secrets.SONAR_URL }}'
+          SONAR_ORG_KEY: '${{ secrets.SONAR_ORG_KEY }}'
+      - name: ServiceNow DevOps Sonar Scan Results
+        uses: ServiceNow/servicenow-devops-sonar@main
+        with:
+          instance-url: '${{ secrets.SN_INSTANCE_URL }}'
+          devops-integration-user-name: '${{ secrets.SN_DEVOPS_USER }}'
+          devops-integration-user-password: '${{ secrets.SN_DEVOPS_PASSWORD }}'
+          tool-id: '${{ secrets.SN_ORCHESTRATION_TOOL_ID }}'
+          context-github: '${{ toJSON(github) }}'
+          job-name: Build
+          sonar-host-url: '${{ secrets.SONAR_URL }}'
+          sonar-project-key: '${{ secrets.SONAR_PROJECT_KEY }}'
+  
