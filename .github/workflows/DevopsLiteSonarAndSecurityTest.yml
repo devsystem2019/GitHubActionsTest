@@ -1,6 +1,6 @@
 # This workflow uses ServiceNow custom actions that are certified by ServiceNow.
 
-name: custom actions workflow
+name: DevopsLiteSonarAndSecurityTest
 on: workflow_dispatch
   # push:
   #   branches: [ "main" ]
