@@ -2,7 +2,7 @@ name: CustomChangeAction
 
 on:
   pull_request:
-  workflow_dispatch: 
+  workflow_dispatch:
 
 jobs:
   deploy:
