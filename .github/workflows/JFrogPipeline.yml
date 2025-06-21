@@ -81,11 +81,11 @@ jobs:
                   # ServiceNow Instance URL
                   instance-url: ${{ secrets.SN_INSTANCE_URL }}
                   # # # Devops Integration User Name
-                  # devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
+                  devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
                   # # # Devops Integration User Password
-                  # devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+                  devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
                   # Devops Integration User Name
-                  devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
+                  # devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
                   # Orchestration Tool Id
                   tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
                   # Display Name of the Job
