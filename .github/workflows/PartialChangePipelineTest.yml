@@ -1,0 +1,44 @@
+# This workflow uses ServiceNow custom actions that are certified by ServiceNow.
+
+name: DevOpsPartialChangePipelineTest
+on: workflow_dispatch
+  # push:
+  #   branches: [ "main" ]
+  # pull_request:
+  #   branches: [ "main" ]
+  #   types: [opened, synchronize, reopened]
+
+jobs:
+  Sonar:
+    name: Sonar
+    runs-on: ubuntu-latest
+    steps:
+      - name: ServiceNow DevOps Sonar Scan Results
+        uses: ServiceNow/servicenow-devops-sonar@main
+        with:
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+          context-github: ${{ toJSON(github) }}
+          job-name: Sonar
+          sonar-host-url: ${{ secrets.SONAR_URL }}
+          sonar-project-key: ${{ secrets.SONAR_PROJECT_KEY }}
+  change:
+    name: Change
+    needs: Sonar
+    runs-on: ubuntu-latest
+    steps:
+      - name: ServiceNow DevOps Change Attributes
+        uses: ServiceNow/servicenow-devops-change@main
+        with:
+          # devops-integration-user-name: ${{ secrets.SN_DEVOPS_USER }}
+          # devops-integration-user-password: ${{ secrets.SN_DEVOPS_PASSWORD }}
+          devops-integration-token: ${{ secrets.SN_DEVOPS_TOKEN }}
+          instance-url: ${{ secrets.SN_INSTANCE_URL }}
+          tool-id: ${{ secrets.SN_ORCHESTRATION_TOOL_ID }}
+          context-github: ${{ toJSON(github) }}
+          job-name: 'Change'
+          change-request: '{"autoCloseChange":true,"attributes":{"short_description":"Automated Software Deployments","chg_model":"007c4001c343101035ae3f52c1d3aeb2","description":"Automated Software Deployment.","assignment_group":"a715cd759f2002002920bde8132e7018","implementation_plan":"Software update is tested and results can be found in Test Summaries Tab.","backout_plan":"When software fails in production, the previous software release will be re-deployed.","test_plan":"Testing if the software was successfully deployed."}}'
+          interval: '100'
+          timeout: '3600'
+  
